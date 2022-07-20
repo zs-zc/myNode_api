@@ -2,7 +2,9 @@
 const db = require("../db/index")
 const bcrypt = require("bcryptjs")
 
-
+// 导入token包
+const jwt = require("jsonwebtoken")
+const config = require("../config")
 exports.reguser = (req, res) => {
     let userInfo = req.body
     console.log(userInfo, 'userInfo');
@@ -42,11 +44,18 @@ exports.login = (req, res) => {
             return res.cc('登录失败')
         }
         const isPsd = bcrypt.compareSync(userInfo.password, results[0].password)  // (用户输入密码，数据库密码)
-        console.log(isPsd, '校验传输密码与数据库密码的正确性');
+        // console.log(isPsd, '校验传输密码与数据库密码的正确性');
         if (!isPsd) {
             res.cc('登录失败')
         } else {
-            res.cc('登录成功')
+            const user = { ...results[0], password: "", user_pic: "" }
+            // 生成Token
+            const token = jwt.sign(user, config.jwtSecretKey, { expiresIn: config.expiresIn })
+            res.send({
+                status: 0,
+                message: "登录成功",
+                token: "Bearer " + token
+            })
         }
     })
 }
