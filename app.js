@@ -1,7 +1,7 @@
 const express = require("express")
 
 const app = express()
-const joi = require("@hapi/joi")
+const joi = require("joi")
 
 // 导入中间件
 const cors = require("cors")
