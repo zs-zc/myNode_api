@@ -25,7 +25,7 @@ exports.reguser = (req, res) => {
         db.query(sql, { username: userInfo.username, password: userInfo.password }, (err, results) => {
             if (err) return res.cc(err)
             if (results.affectedRows !== 1) return res.cc("注册用户失败，请稍后再试")
-            res.send("注册成功", 0)
+            res.cc("注册成功", 0)
         })
     })
 }

@@ -5,7 +5,7 @@ const router = express.Router()
 const user_handler = require("../router_handle/user")
 
 //导入验证数据中间件
-const expressJoi = requiure("@escook/express-joi")
+const expressJoi = require("@escook/express-joi")
 
 // 导入需要验证规则对象
 const { reg_login_schema } = require("../schema/user")
