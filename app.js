@@ -25,11 +25,9 @@ app.use('/api', userRouter)
 
 // 定义错误级别的中间件
 app.use((err, req, res, next) => {
-    if (err instanceof joi.ValidationError) {
-        res.cc(err)
-    } else {
-        res.cc(err)
-    }
+    if (err instanceof joi.ValidationError) return res.cc(err)
+
+
 })
 
 app.listen(2000, () => {
