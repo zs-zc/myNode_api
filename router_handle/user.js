@@ -1,12 +1,14 @@
 // 导入数据库
 const db = require("../db/index")
 const bcrypt = require("bcryptjs")
+
+
 exports.reguser = (req, res) => {
     const userInfo = req.body
     console.log(userInfo, 'userInfo');
-    if (!userInfo.username || !userInfo.password) {
-        return res.cc("用户名或密码不合法")
-    }
+    // if (!userInfo.username || !userInfo.password) {
+    //     return res.cc("用户名或密码不合法")
+    // }
     // 定义sql语句
     const sqlStr = 'select * from ev_users where username=?'
     db.query(sqlStr, userInfo.username, (err, results) => {

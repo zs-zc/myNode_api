@@ -1,6 +1,7 @@
 const express = require("express")
 
 const app = express()
+const joi = require("@hapi/joi")
 
 // 导入中间件
 const cors = require("cors")
@@ -21,6 +22,15 @@ app.use((req, res, next) => {
 // 导入路由
 const userRouter = require("./router/user")
 app.use('/api', userRouter)
+
+// 定义错误级别的中间件
+app.use((err, req, res, next) => {
+    if (err instanceof joi.ValidationError) {
+        res.cc(err)
+    } else {
+        res.cc(err)
+    }
+})
 
 app.listen(2000, () => {
     console.log('api server running at http://127.0.0.1:2000');
