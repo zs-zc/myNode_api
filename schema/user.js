@@ -8,7 +8,8 @@ const password = joi.string().pattern(/^[\S]{6,12}$/).required()
 const id = joi.number().integer().min(1).required()
 const nickname = joi.string().required()
 const email = joi.string().email().required()
-
+// 定义校验头像规则
+const avatar = joi.string().dataUri().required()
 // 定义验证注册和登录表单的数据规则对象
 exports.reg_login_schema = {
     body: {
@@ -29,5 +30,11 @@ exports.update_userpassword_schema = {
     body: {
         oldPwd: password,
         newPwd: joi.not(joi.ref('oldPwd')).concat(password)
+    }
+}
+// 定义头像数据规则
+exports.update_userAvatar_schema = {
+    body: {
+        avatar
     }
 }
