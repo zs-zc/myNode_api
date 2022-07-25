@@ -28,7 +28,9 @@ app.use(expressJWT({ secret: config.jwtSecretKey }).unless({ path: [/^\/api/] })
 // 导入路由
 const userRouter = require("./router/user")
 app.use('/api', userRouter)
-
+// 导入我的
+const userinfoRoute = require("./router/userInfo")
+app.use('/my', userinfoRoute)
 // 定义错误级别的中间件
 app.use((err, req, res, next) => {
     console.log(err, 'err');
