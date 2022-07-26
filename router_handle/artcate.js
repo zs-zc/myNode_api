@@ -52,3 +52,22 @@ exports.detailArtcate = (req, res) => {
     })
 
 }
+// 更新文章分类
+exports.updateArtcate = (req, res) => {
+    const sql = `select * from ev_article_cate where Id<>? and (name=? or alias=?)`
+    db.query(sql, [req.body.id, req.body.name, req.body.alias], (err, results) => {
+        if (err) return res.cc(err)
+        if (results.length === 2) return res.cc('分类名称与分类别名被占用，请更换后重试')
+        if (results.length === 1 && results[0].name === req.body.name && results[0].alias === req.body.alias)
+            return res.cc("分类名称与分类别名被占用，请更换后重试")
+        if (results.length === 1 && results[0].alias === req.body.alias) return res.cc("分类别名被占用，请更换后重试")
+        //更新
+        const sql = `update ev_article_cate set ? where Id=?`
+        db.query(sql, [req.body, req.body.Id], (err, results) => {
+            if (err) return res.cc(err)
+            if (results.affectedRows !== 1) return res.cc("更新文章失败")
+            res.cc("更新文章成功", 0)
+        })
+
+    })
+}
